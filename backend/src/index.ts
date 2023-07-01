@@ -1,9 +1,9 @@
 import dotenv from 'dotenv'
 import path from 'path'
-dotenv.config({ path: path.resolve('..', '.env')})
+dotenv.config({ path: path.resolve('.env'), debug: true })
 
 import { createServerInstance } from './app'
-import { EUserMessages } from 'shared-types/src'
+import { EUserMessages } from 'shared-types/dist'
 import { initDataSource } from './config'
 const startServer = async () => {
     try {

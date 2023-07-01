@@ -10,7 +10,7 @@ export const dataSource = new DataSource({
     synchronize: true,
     logging: false,
     entities: [
-        'dist/src/entities/*.js',
+        'dist/entities/*.js',
     ],
     subscribers: [],
     migrations: [],

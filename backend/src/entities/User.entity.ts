@@ -1,10 +1,11 @@
-import { TUser } from 'shared-types/src'
+import { TUser } from 'shared-types/dist'
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import 'reflect-metadata'
 
 @Entity()
 export class User implements TUser {
 
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('uuid')
     id!: string
 
     @Column()
