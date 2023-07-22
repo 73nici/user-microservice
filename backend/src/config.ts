@@ -1,5 +1,8 @@
 import { DataSource } from 'typeorm'
 
+/**
+ * The configuration for the database.
+ */
 export const dataSource = new DataSource({
     type: 'mariadb',
     host: process.env.NODE_ENV === 'production' ? process.env.DB_HOST_PROD : process.env.DB_HOST,
@@ -16,6 +19,9 @@ export const dataSource = new DataSource({
     migrations: [],
 })
 
+/**
+ * Initializes the connection to the database.
+ */
 export const initDataSource = async () => {
     await dataSource.initialize()
 }

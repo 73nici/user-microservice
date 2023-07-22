@@ -3,8 +3,11 @@ import path from 'path'
 dotenv.config({ path: path.resolve('.env'), debug: true })
 
 import { createServerInstance } from './app'
-import { EUserMessages } from 'shared-types/dist'
 import { initDataSource } from './config'
+
+/**
+ * Starts the service application.
+ */
 const startServer = async () => {
     try {
         await initDataSource()

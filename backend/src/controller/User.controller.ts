@@ -1,24 +1,37 @@
-import {FastifyReply, FastifyRequest} from 'fastify'
+import { FastifyReply, FastifyRequest } from 'fastify'
 import {
     EUserMessages,
     TUser,
     TUserDeleteResponse,
     TUserLoginResponse,
+    TUserLogoutResponse,
     TUserRegisterResponse,
     TUserUpdateResponse,
     TUserWithConfirmation,
     TUserWithNewData,
 } from 'shared-types/dist'
-import {UserService} from '../services'
-import {BaseController} from './Base.controller'
-import {bind} from 'bind-decorator'
+import { UserService } from '../services'
+import { BaseController } from './Base.controller'
+import { bind } from 'bind-decorator'
 
+/**
+ * Represents the user controller for the service.
+ */
 export class UserController extends BaseController {
+    /**
+     * Instance of a user service class.
+     * @private
+     */
     private userService = new UserService()
 
+    /**
+     * The controller for registering a new user.
+     * @param request The fastify request from the application server.
+     * @param reply The fastify reply for the application server.
+     */
     @bind
     public async registerUser(request: FastifyRequest, reply: FastifyReply): Promise<TUserRegisterResponse> {
-        const newUser = this.getTypedBody<TUserWithConfirmation>(request.body);
+        const newUser = this.getTypedBody<TUserWithConfirmation>(request.body)
 
         const result = await this.userService.registerUser(newUser)
 
@@ -27,24 +40,45 @@ export class UserController extends BaseController {
             return { success: true, body: result.body, message: EUserMessages.REGISTER }
         }
 
-        return { success: false, error: result.error }
+        return this.sendErrorWithStatus<TUserRegisterResponse>(reply, result.error, { success: false, error: result.error })
     }
 
+    /**
+     * The controller for logging out a user.
+     * @param request The fastify request from the application server.
+     */
+    @bind
+    public async logoutUser(request: FastifyRequest): Promise<TUserLogoutResponse> {
+        console.log(request.session.authenticated)
 
+        await request.session.destroy()
+        return { success: true, body: undefined, message: EUserMessages.LOGOUT }
+    }
+
+    /**
+     * The controller for logging in a user.
+     * @param request The fastify request from the application server.
+     * @param reply The fastify response for the application server.
+     */
     @bind
     public async loginUser(request: FastifyRequest, reply: FastifyReply): Promise<TUserLoginResponse> {
         const user = this.getTypedBody<TUser>(request.body)
 
-        const result = await this.userService.loginUser(user);
+        const result = await this.userService.loginUser(user)
 
         if (result.success) {
             request.session.authenticated = true
-            return { success: true, body: result.body, message: EUserMessages.REGISTER }
+            return { success: true, body: result.body, message: EUserMessages.LOGIN }
         }
 
-        return { success: false, error: result.error }
+        return this.sendErrorWithStatus<TUserLoginResponse>(reply, result.error, { success: false, error: result.error })
     }
 
+    /**
+     * The controller for updating a users' data.
+     * @param request The fastify request from the application server.
+     * @param reply The fastify reply for the application server.
+     */
     @bind
     public async updateUsername(request: FastifyRequest, reply: FastifyReply): Promise<TUserUpdateResponse> {
         const newUserData = this.getTypedBody<TUserWithNewData>(request.body)
@@ -55,9 +89,14 @@ export class UserController extends BaseController {
             return { success: true, body: result.body, message: EUserMessages.UPDATE }
         }
 
-        return { success: false, error: result.error }
+        return this.sendErrorWithStatus<TUserUpdateResponse>(reply, result.error, { success: false, error: result.error })
     }
 
+    /**
+     * The controller for deleting a user.
+     * @param request The fastify request from the application server.
+     * @param reply The fastify reply for the application server.
+     */
     @bind
     public async deleteUser(request: FastifyRequest, reply: FastifyReply): Promise<TUserDeleteResponse> {
         const user = this.getTypedBody<TUserWithConfirmation>(request.body)
@@ -69,6 +108,6 @@ export class UserController extends BaseController {
             return { success: true, message: EUserMessages.DELETE, body: undefined }
         }
 
-        return { success: false, error: result.error }
+        return this.sendErrorWithStatus<TUserDeleteResponse>(reply, result.error, { success: false, error: result.error })
     }
 }

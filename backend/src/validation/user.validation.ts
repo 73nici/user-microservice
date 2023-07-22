@@ -1,5 +1,8 @@
-import fastify, { FastifyInstance, FastifySchema } from 'fastify'
+import { FastifySchema } from 'fastify'
 
+/**
+ * The registration schema for registering a new user.
+ */
 export const registrationSchema: FastifySchema = {
     body: {
         type: 'object',
@@ -22,6 +25,9 @@ export const registrationSchema: FastifySchema = {
     },
 }
 
+/**
+ * The login schema for logging in a user.
+ */
 export const loginSchema: FastifySchema = {
     body: {
         type: 'object',
@@ -40,6 +46,9 @@ export const loginSchema: FastifySchema = {
     },
 }
 
+/**
+ * The update schema for updating a user's data.
+ */
 export const updateSchema: FastifySchema = {
     body: {
         type: 'object',
@@ -70,6 +79,9 @@ export const updateSchema: FastifySchema = {
     },
 }
 
+/**
+ * The delete schema for deleting a user from the database.
+ */
 export const deleteSchema: FastifySchema = {
     body: {
         type: 'object',

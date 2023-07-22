@@ -3,6 +3,9 @@ import fastifyCookie from '@fastify/cookie';
 import fastifySession from '@fastify/session'
 import { userRoutes } from './routes'
 
+/**
+ * Creates the fastify service application and registers plugins.
+ */
 export const createServerInstance = (): FastifyInstance => {
     const server: FastifyInstance = Fastify({ logger: true })
     server.register(fastifyCookie)

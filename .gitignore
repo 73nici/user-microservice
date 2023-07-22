@@ -1,0 +1,12 @@
+# root dir
+.idea
+
+# backend dir
+backend/node_modules
+backend/dist
+backend/.idea
+
+# connector-package dir
+connector-package/node_modules
+connector-package/dist
+connector-package/.idea
