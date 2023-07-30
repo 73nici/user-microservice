@@ -1,5 +1,6 @@
 # root dir
 .idea
+node_modules
 
 # backend dir
 backend/node_modules

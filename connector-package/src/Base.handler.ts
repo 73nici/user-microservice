@@ -31,7 +31,7 @@ export class BaseHandler {
      * @protected
      */
     @bind
-    protected constructUrl(uri: string) {
+    protected constructUrl(uri: string): string {
         return `${this.baseUrl}${uri}`
     }
 
@@ -52,7 +52,7 @@ export class BaseHandler {
      * @protected
      */
     @bind
-    protected setSessionFromService(serviceResponse: Response, reply: FastifyReply) {
+    protected setSessionFromService(serviceResponse: Response, reply: FastifyReply): void {
         const cookie = serviceResponse.headers.get('Set-Cookie')
         reply.header('Set-Cookie', cookie)
     }
@@ -65,7 +65,7 @@ export class BaseHandler {
      * @protected
      */
     @bind
-    protected clearSessionCookie(reply: FastifyReply, cookieName: string, path: string) {
+    protected clearSessionCookie(reply: FastifyReply, cookieName: string, path: string): void {
         reply.header('Set-Cookie', `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=${path}`)
     }
 
@@ -76,7 +76,7 @@ export class BaseHandler {
      * @protected
      */
     @bind
-    protected setStatusCodeFromService(serviceResponse: Response, reply: FastifyReply) {
+    protected setStatusCodeFromService(serviceResponse: Response, reply: FastifyReply): void {
         reply.statusCode = serviceResponse.status
     }
 
@@ -88,14 +88,14 @@ export class BaseHandler {
      * @protected
      */
     @bind
-    protected async postFetch(url: string, cookie: string | undefined, body: unknown) {
+    protected async postFetch(url: string, cookie: string | undefined, body: unknown): Promise<Response> {
         return fetch(url, {
             body: JSON.stringify(body),
             method: 'POST',
             headers: {
                 'Content-Type':'application/json',
-                'Cookie': cookie ?? ''
-            }
+                'Cookie': cookie ?? '',
+            },
         })
     }
 
@@ -106,12 +106,12 @@ export class BaseHandler {
      * @protected
      */
     @bind
-    protected async getFetch(url: string, cookie: string) {
+    protected async getFetch(url: string, cookie: string): Promise<Response> {
         return fetch(url, {
             method: 'GET',
             headers: {
-                'Cookie': cookie
-            }
+                'Cookie': cookie,
+            },
         })
     }
 }

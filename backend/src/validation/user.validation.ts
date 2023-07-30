@@ -100,6 +100,6 @@ export const deleteSchema: FastifySchema = {
             passwordConfirmation: {
                 type: 'string',
             },
-        }
-    }
+        },
+    },
 }

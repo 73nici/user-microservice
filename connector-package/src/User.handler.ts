@@ -10,7 +10,7 @@ import {
     TUserRegisterArgs,
     TUserRegisterResponse,
     TUserUpdateArgs,
-    TUserUpdateResponse
+    TUserUpdateResponse,
 } from 'shared-types/dist'
 import { bind } from 'bind-decorator'
 import { BaseHandler } from './Base.handler'

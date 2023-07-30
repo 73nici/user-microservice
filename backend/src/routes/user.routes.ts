@@ -7,9 +7,9 @@ import { deleteSchema, loginSchema, registrationSchema, updateSchema } from '../
  * A fastify plugin which gathers all user routes in one plugin.
  * @param fastify The fastify instance on which the plugin appears.
  */
-export const userRoutes = async (fastify: FastifyInstance) => {
+export const userRoutes = async (fastify: FastifyInstance): Promise<void> => {
     const userController = new UserController()
-    fastify.post(EUserRoutes.REGISTER, { schema: registrationSchema,  }, userController.registerUser)
+    fastify.post(EUserRoutes.REGISTER, { schema: registrationSchema }, userController.registerUser)
     fastify.post(EUserRoutes.LOGIN, { schema: loginSchema }, userController.loginUser)
     fastify.post(EUserRoutes.UPDATE, { schema: updateSchema }, userController.updateUsername)
     fastify.post(EUserRoutes.DELETE, { schema: deleteSchema }, userController.deleteUser)

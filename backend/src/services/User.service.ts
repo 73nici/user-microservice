@@ -9,7 +9,7 @@ import { Repository } from 'typeorm'
 import { User } from '../entities'
 import { dataSource } from '../config'
 import { bind } from 'bind-decorator'
-import { hash, verify } from 'argon2';
+import { hash, verify } from 'argon2'
 
 /**
  * Represents the user service class.
