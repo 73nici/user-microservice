@@ -1,5 +1,5 @@
 import { FastifyInstance } from 'fastify'
-import { EUserRoutes } from 'shared-types/dist'
+import { EUserRoutes } from '@73nici/shared-types/dist'
 import { UserHandler } from './User.handler'
 
 /**

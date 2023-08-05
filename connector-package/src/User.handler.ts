@@ -11,7 +11,7 @@ import {
     TUserRegisterResponse,
     TUserUpdateArgs,
     TUserUpdateResponse,
-} from 'shared-types/dist'
+} from '@73nici/shared-types/dist'
 import { bind } from 'bind-decorator'
 import { BaseHandler } from './Base.handler'
 
