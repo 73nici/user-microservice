@@ -2,9 +2,27 @@ name: Build backend and connector package
 on: [ push ]
 
 jobs:
+  lint:
+    name: Lint backend
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [ 18.x ]
+
+    steps:
+      - uses: actions/checkout@v3
+        name: Checkout repository
+      - run: npm ci
+        name: Install dependencies
+      - run: npm run lint
+        name: Lint sourcecode
+
   build-backend:
     name: Build backend
     runs-on: ubuntu-latest
+    needs:
+      - lint
 
     permissions:
       packages: read
@@ -31,6 +49,8 @@ jobs:
   build-connector-package:
     name: Build connector-package
     runs-on: ubuntu-latest
+    needs:
+      - lint
 
     permissions:
       packages: read
