@@ -1,0 +1,50 @@
+name: Build backend and connector package
+on: [ push ]
+
+jobs:
+  build-backend:
+    name: Build backend
+    runs-on: ubuntu-latest
+
+    permissions:
+      packages: read
+
+    strategy:
+      matrix:
+        node-version: [ 18.x ]
+
+    steps:
+      - uses: actions/checkout@v3
+        name: Checkout repository
+      - run: |
+          echo "@username:registry=https://npm.pkg.github.com" >> .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
+      - run: npm ci
+        working-directory: backend
+        name: Install dependencies
+      - run: npm run build
+        working-directory: backend
+        name: Build backend
+
+  build-connector-package:
+    name: Build connector-package
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [ 18.x ]
+
+    steps:
+      - uses: actions/checkout@v3
+        name: Checkout repository
+      - run: |
+          echo "@username:registry=https://npm.pkg.github.com" > .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
+        working-directory: connector-package
+        name: add auth for package registry
+      - run: npm ci
+        working-directory: connector-package
+        name: Install dependencies
+      - run: npm run build
+        working-directory: connector-package
+        name: Build connector-package
