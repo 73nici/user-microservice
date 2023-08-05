@@ -17,8 +17,10 @@ jobs:
       - uses: actions/checkout@v3
         name: Checkout repository
       - run: |
-          echo "@username:registry=https://npm.pkg.github.com" >> .npmrc
+          echo "@username:registry=https://npm.pkg.github.com" > .npmrc
           echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
+        working-directory: backend
+        name: Add auth for package registry
       - run: npm ci
         working-directory: backend
         name: Install dependencies
@@ -29,6 +31,9 @@ jobs:
   build-connector-package:
     name: Build connector-package
     runs-on: ubuntu-latest
+
+    permissions:
+      packages: read
 
     strategy:
       matrix:
@@ -41,7 +46,7 @@ jobs:
           echo "@username:registry=https://npm.pkg.github.com" > .npmrc
           echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
         working-directory: connector-package
-        name: add auth for package registry
+        name: Add auth for package registry
       - run: npm ci
         working-directory: connector-package
         name: Install dependencies
