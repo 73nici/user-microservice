@@ -1,6 +1,6 @@
 import { bind } from 'bind-decorator'
 import { FastifyReply } from 'fastify'
-import { BaseError } from 'shared-types/dist'
+import { BaseError } from '@73nici/shared-types/dist'
 
 /**
  * Represents the base controller for the service with basic functionality.

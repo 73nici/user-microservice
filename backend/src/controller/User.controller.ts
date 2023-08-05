@@ -9,7 +9,7 @@ import {
     TUserUpdateResponse,
     TUserWithConfirmation,
     TUserWithNewData,
-} from 'shared-types/dist'
+} from '@73nici/shared-types/dist'
 import { UserService } from '../services'
 import { BaseController } from './Base.controller'
 import { bind } from 'bind-decorator'

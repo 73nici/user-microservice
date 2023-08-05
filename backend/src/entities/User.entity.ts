@@ -1,4 +1,4 @@
-import { TUser } from 'shared-types/dist'
+import { TUser } from '@73nici/shared-types/dist'
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 import 'reflect-metadata'
 

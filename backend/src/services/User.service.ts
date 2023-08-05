@@ -4,7 +4,7 @@ import {
     TUserWithoutPassword,
     UserConfirmationMatchError,
     UserCreateDuplicate, UserNotFound,
-} from 'shared-types/dist'
+} from '@73nici/shared-types/dist'
 import { Repository } from 'typeorm'
 import { User } from '../entities'
 import { dataSource } from '../config'
