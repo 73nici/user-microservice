@@ -23,13 +23,14 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           registry-url: 'https://npm.pkg.github.com'
-      - run: npm ci
-        working-directory: connector-package
-        name: Install dependencies
       - run: |
           echo "@username:registry=https://npm.pkg.github.com" > .npmrc
           echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
         working-directory: connector-package
+        name: Add auth for package registry
+      - run: npm ci
+        working-directory: connector-package
+        name: Install dependencies
       - run: npm publish
         working-directory: connector-package
         name: Publish package to registry
