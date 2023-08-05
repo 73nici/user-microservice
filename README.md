@@ -1,5 +1,9 @@
 # user-microservice
 
+[![Build backend and connector package](https://github.com/73nici/user-microservice/actions/workflows/build-dev.yaml/badge.svg)](https://github.com/73nici/user-microservice/actions/workflows/build-dev.yaml)
+
+[![Publish connector-package to registry](https://github.com/73nici/user-microservice/actions/workflows/publish-package-to-registry.yml/badge.svg)](https://github.com/73nici/user-microservice/actions/workflows/publish-package-to-registry.yml)
+
 The project is currently in a very minimal working state.
 The main goal of this is to try out fastify and getting a deeper understanding of http cookies.
 
