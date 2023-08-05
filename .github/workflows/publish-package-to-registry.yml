@@ -1,0 +1,34 @@
+name: Publish connector-package to registry
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish-package:
+    name: Publish the package
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    strategy:
+      matrix:
+        node-version: [ 18.x ]
+
+    steps:
+      - uses: actions/checkout@v3
+        name: Checkout repository
+      - uses: actions/setup-node@v3
+        with:
+          registry-url: 'https://npm.pkg.github.com'
+      - run: npm ci
+        name: Install dependencies
+      - run: |
+          echo "@username:registry=https://npm.pkg.github.com" > .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
+      - run: npm publish
+        name: Publish package to registry
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
