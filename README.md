@@ -33,3 +33,21 @@ Following installation steps are required:
 - run `npm ci` in backend directory
 - run `docker compose up` in backend directory for starting local db
 - run `npm run start` in backend directory for starting user microservice
+- user-microservice is up and running
+
+## Available routes
+
+The payload type and the response type can be viewed in the `shared-types` package.
+Once logged in or registered, a session cookie to identify the user is required.
+The name of the session cookie can be configured in the `.env` file.
+All response types extend the base response and contain the following data.
+`{ success: true, body: T, message: M }` if the request is successful and `{ success: false, error: E }` if the request is not successful.
+`T` stands for the response type, `M` for the message type and `E` for the occurred error.
+
+| Route         | URI       | Method | Payload type           | Response type         | Possible statuscodes                                                                                                                                                      |
+|---------------|-----------|--------|------------------------|-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| User register | /register | POST   | TUserRegisterArgs      | TUserRegisterResponse | - 400 -> password and password confirmation don't match <br> - 409 -> User already exist and cannot be created <br> - 200 -> success                                      |
+| User login    | /login    | POST   | TUserLoginArgs         | TUserLoginResponse    | - 404 -> user ist not found in the DB or provided password doesn't match <br> - 200 -> success                                                                            |
+| User logout   | /logout   | GET    | TUserLogoutArgs (void) | TUserLogoutResponse   | - 200 -> success                                                                                                                                                          |
+| User update   | /update   | POST   | TUserUpdateArgs        | TUserUpdateResponse   | - 409 -> new username already exist <br> - 404 -> current user is not found in the DB <br> - 400 -> new password and password confirmation doesn't match - 200 -> success |
+| User delete   | /delete   | POST   | TUserDeleteArgs        | TUserDeleteResponse   | - 400 -> password and password confirmation don't match <br> - 404 user is not found in the DB OR provided password doesn't match                                         |
